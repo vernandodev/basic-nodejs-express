@@ -8,7 +8,6 @@ const methodPost = async (req, res) => {
       daerah,
       deskripsi,
     });
-
     await store.save();
     res.json(store);
   } catch (e) {
@@ -21,3 +20,5 @@ const methodPost = async (req, res) => {
     });
   }
 };
+
+module.exports = { methodPost };
