@@ -1,5 +1,5 @@
 const sequilize = require('sequelize');
-const getConnect = require('./config.json');
+const getConnect = require('./config.json')['development'];
 
 const db = new sequilize(getConnect.database, getConnect.username, getConnect.password, {
   dialect: getConnect.dialect,
