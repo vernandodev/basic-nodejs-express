@@ -21,4 +21,34 @@ const methodPost = async (req, res) => {
   }
 };
 
-module.exports = { methodPost };
+const methodGet = async (req, res) => {
+  try {
+    const getData = await Food.findAll({});
+    res.json(getData);
+  } catch (e) {
+    res.status(500).json({
+      e: [
+        {
+          message: 'Error',
+        },
+      ],
+    });
+  }
+};
+
+const methodGetId = async (req, res) => {
+  try {
+    const getDataById = await Food.findAll({});
+    res.json(getDataById);
+  } catch (e) {
+    res.status(500).json({
+      e: [
+        {
+          message: 'Error',
+        },
+      ],
+    });
+  }
+};
+
+module.exports = { methodPost, methodGet, methodGetId };
