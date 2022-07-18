@@ -38,7 +38,10 @@ const methodGet = async (req, res) => {
 
 const methodGetId = async (req, res) => {
   try {
-    const getDataById = await Food.findAll({});
+    const id = req.params.id;
+    const getDataById = await Food.findOne({
+      where: { id: id },
+    });
     res.json(getDataById);
   } catch (e) {
     res.status(500).json({
