@@ -1,4 +1,4 @@
-const Food = require('../model/foodsModel');
+const Food = require('../modelS/foodsModel');
 
 const methodPost = async (req, res) => {
   try {
