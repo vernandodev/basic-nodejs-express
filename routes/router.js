@@ -18,4 +18,6 @@ router.get('/foods/:id', foodController.methodGetId);
 router.put('/foods/:id', foodController.methodUpdate);
 router.delete('/foods/:id', foodController.methodDelete);
 
+router.post('/foods/upload', foodController.methodUploadPhotos);
+
 module.exports = router;

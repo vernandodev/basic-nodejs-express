@@ -1,4 +1,34 @@
-const Food = require('../modelS/foodsModel');
+const Food = require('../models/foodsModel');
+const Photo = require('../models/photosModel');
+const upload = require('../helper/fileupload');
+
+const methodUploadPhotos = async (req, res) => {
+  try {
+    // upload file
+    await upload(req, res);
+
+    if (req.file === undefined) {
+      console.error(req.file);
+      return res.status(400).send({
+        message: 'Image belum di pilih',
+      });
+    }
+
+    // DB connect
+    Photo.create({
+      idfoods: req.body.idfoods,
+      path: req.file.originalname,
+    }).then((data) => {
+      res.status(200).send({
+        message: 'File berhasil di upload',
+      });
+    });
+  } catch (e) {
+    return res.status(500).json({
+      message: 'error 1',
+    });
+  }
+};
 
 const methodPost = async (req, res) => {
   try {
@@ -11,12 +41,8 @@ const methodPost = async (req, res) => {
     await store.save();
     res.json(store);
   } catch (e) {
-    res.status(500).json({
-      e: [
-        {
-          message: 'Error',
-        },
-      ],
+    return res.status(500).json({
+      message: 'Error',
     });
   }
 };
@@ -26,12 +52,8 @@ const methodGet = async (req, res) => {
     const getData = await Food.findAll({});
     res.json(getData);
   } catch (e) {
-    res.status(500).json({
-      e: [
-        {
-          message: 'Error',
-        },
-      ],
+    return res.status(500).json({
+      message: 'Error',
     });
   }
 };
@@ -44,12 +66,8 @@ const methodGetId = async (req, res) => {
     });
     res.json(getDataById);
   } catch (e) {
-    res.status(500).json({
-      e: [
-        {
-          message: 'Error',
-        },
-      ],
+    return res.status(500).json({
+      message: 'Error',
     });
   }
 };
@@ -78,12 +96,8 @@ const methodUpdate = async (req, res) => {
     res.json(getDataById);
   } catch (e) {
     console.error(e.message);
-    res.status(500).json({
-      e: [
-        {
-          message: 'Error',
-        },
-      ],
+    return res.status(500).json({
+      message: 'Error',
     });
   }
 };
@@ -98,14 +112,17 @@ const methodDelete = async (req, res) => {
     await deleteFoods;
     res.send('berhasildihapus');
   } catch (e) {
-    res.status(500).json({
-      e: [
-        {
-          message: 'Error',
-        },
-      ],
+    return res.status(500).json({
+      message: 'Error',
     });
   }
 };
 
-module.exports = { methodPost, methodGet, methodGetId, methodUpdate, methodDelete };
+module.exports = {
+  methodPost,
+  methodGet,
+  methodGetId,
+  methodUpdate,
+  methodDelete,
+  methodUploadPhotos,
+};

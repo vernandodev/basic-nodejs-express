@@ -1,10 +1,16 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const Food = db.define('foods', {
-  namamakanan: { type: DataTypes.STRING, allowNull: false },
-  daerah: { type: DataTypes.STRING },
-  deskripsi: { type: DataTypes.STRING },
-});
+const Food = db.define(
+  'foods',
+  {
+    namamakanan: { type: DataTypes.STRING, allowNull: false },
+    daerah: { type: DataTypes.STRING },
+    deskripsi: { type: DataTypes.STRING },
+  },
+  {
+    freezeTableName: true,
+  }
+);
 
 module.exports = Food;
