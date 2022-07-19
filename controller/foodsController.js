@@ -54,4 +54,58 @@ const methodGetId = async (req, res) => {
   }
 };
 
-module.exports = { methodPost, methodGet, methodGetId };
+const methodUpdate = async (req, res) => {
+  try {
+    const { namamakanan, daerah, deskripsi } = req.body;
+    const id = req.params.id;
+
+    const updateFood = Food.update(
+      {
+        namamakanan,
+        daerah,
+        deskripsi,
+      },
+      {
+        where: { id: id },
+      }
+    );
+
+    await updateFood;
+    res.send('Berhasil diupdate!');
+    const getDataById = await Food.findOne({
+      where: { id: id },
+    });
+    res.json(getDataById);
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).json({
+      e: [
+        {
+          message: 'Error',
+        },
+      ],
+    });
+  }
+};
+
+const methodDelete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteFoods = Food.destroy({
+      where: { id: id },
+    });
+
+    await deleteFoods;
+    res.send('berhasildihapus');
+  } catch (e) {
+    res.status(500).json({
+      e: [
+        {
+          message: 'Error',
+        },
+      ],
+    });
+  }
+};
+
+module.exports = { methodPost, methodGet, methodGetId, methodUpdate, methodDelete };
